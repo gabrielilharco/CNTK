@@ -30,7 +30,21 @@
     <HasJava>false</HasJava>
     <HasJava Condition="Exists('$(JAVA_HOME)\bin\javac.exe')">true</HasJava>
 
-    <CntkComponentVersion>2.4</CntkComponentVersion>
+    <!-- Set version related properties -->
+    <!-- Modify both of the following during major release -->
+    <CntkVersion>2.4</CntkVersion>
+    <PublicBuild>false</PublicBuild>
+
+    <CntkVersionProvidedExternally>false</CntkVersionProvidedExternally>
+    <CntkVersionProvidedExternally Condition=" '$(BUILD_CNTK_VERSION)' != '' ">true</CntkVersionProvidedExternally>
+
+    <CntkVersion Condition="$(CntkVersionProvidedExternally)">$(BUILD_CNTK_VERSION)</CntkVersion>
+    <PublicBuild Condition="$(CntkVersionProvidedExternally)">true</PublicBuild>
+
+    <CntkVersionBanner>$(CntkVersion)</CntkVersionBanner>
+    <CntkVersionBanner Condition="!$(PublicBuild)">$(CntkVersionBanner)+</CntkVersionBanner>
+
+    <CntkComponentVersion>$(CntkVersion)</CntkComponentVersion>
     <CntkComponentVersion Condition="$(DebugBuild)">$(CntkComponentVersion)d</CntkComponentVersion>
   </PropertyGroup>
   
